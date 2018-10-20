@@ -10,10 +10,14 @@ public class MagicWand : MonoBehaviour
         [SerializeField] SoundFIre sounder;
     public GameObject effect;
     public GameObject effect2;
+        private GameObject inflator;
 
     public GameObject ball;
+        public GameObject ball2;
     public Transform BrushTip;
     private string Recorder;
+
+        private bool enlarging;
 
         private float timeOut = 0.1f;
         private float timeElapsed;
@@ -27,6 +31,8 @@ public class MagicWand : MonoBehaviour
     {
 
     }
+    
+    
 
     void BallMagic()
     {
@@ -45,6 +51,22 @@ public class MagicWand : MonoBehaviour
    
         }
 
+
+
+    void GenerateBall()
+        {
+                inflator = Instantiate(ball2, BrushTip.position, BrushTip.rotation) as GameObject;
+            inflator.gameObject.transform.Translate(0, 0, 10.0f);
+            
+
+        }
+
+        void Inflate()
+        {
+            inflator.gameObject.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+            //inflator.gameObject.transform.position += inflator.gameObject.transform.forward;
+        }
+
     void Update()
     {
             timeElapsed += Time.deltaTime;
@@ -55,10 +77,24 @@ public class MagicWand : MonoBehaviour
             SteamVR_TrackedObject trackedObject = GetComponent<SteamVR_TrackedObject>();
         var device = SteamVR_Controller.Input((int)trackedObject.index);
 
-            //ふくらむ
-            if (device.GetTouch(SteamVR_Controller.ButtonMask.Trigger))
+            //推している間
+            if (device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
             {
+                
+                GenerateBall();
+            }
 
+            if (device.GetPress(SteamVR_Controller.ButtonMask.Grip))
+            {
+                if (inflator != null)
+                    Inflate();
+            }
+
+            if (device.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+            {
+                if (inflator != null)
+                    //brushtipのむいてる方向にとぶ
+                    inflator.GetComponent<Rigidbody>().AddForce(BrushTip.transform.forward * 10000f);
             }
 
 
