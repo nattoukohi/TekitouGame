@@ -68,8 +68,8 @@ public class CreateSwordTrail : MonoBehaviour
                 startPoints[i], endPoints[i], startPoints[i + 1],
                 startPoints[i + 1], endPoints[i], endPoints[i + 1]
             });
-            Debug.DrawLine(startPoints[i], endPoints[i], Color.red);
-            Debug.DrawLine(startPoints[i + 1], endPoints[i + 1], Color.yellow);
+            //Debug.DrawLine(startPoints[i], endPoints[i], Color.red);
+            //Debug.DrawLine(startPoints[i + 1], endPoints[i + 1], Color.yellow);
         }
 
         // UVMapのパラメータ設定
@@ -84,7 +84,7 @@ public class CreateSwordTrail : MonoBehaviour
             //　表示する四角形数で1を割って割合を計算
             addParam += 1f / saveMeshNum;
 
-            Debug.Log(addParam);
+            //Debug.Log(addParam);
         }
 
         //　メッシュ用の三角形を登録した頂点で設定
