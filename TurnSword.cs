@@ -6,8 +6,11 @@ public class TurnSword : MonoBehaviour {
     public Animator Animator;
     Vector3 PrevPos;
     Vector3 NewPos;
-    Vector3 ObjVelocity;
+    Vector3 ObjDisplacement;
+    Vector3 Calculation;
+    public Vector3 ObjVelocity;
     private float timeElapsed;
+    [SerializeField] HeadRotation HeadRotation;
 
     //private Rigidbody _rigidbody;
     // Use this for initialization
@@ -24,15 +27,32 @@ public class TurnSword : MonoBehaviour {
 
 
         NewPos = transform.position;  // each frame track the new position
-        ObjVelocity = (NewPos - PrevPos) / Time.fixedDeltaTime;  // velocity = dist/time
+        ObjDisplacement = (NewPos - PrevPos);
+        ObjVelocity = ObjDisplacement / Time.fixedDeltaTime;  // velocity = dist/time
         PrevPos = NewPos;  // update position for next frame calculation
-        Debug.Log(ObjVelocity);
-        Debug.Log(transform.rotation);
+        //Debug.Log(ObjVelocity);
+        //Debug.Log(transform.forward + "..." + ObjDisplacement.ToString("F4"));
+
+        Calculation = ObjDisplacement + transform.forward;
 
         if (ObjVelocity.magnitude > 3&&timeElapsed > 1)
         {
-            Animator.SetTrigger("Attack");
-            timeElapsed = 0;
+            if (HeadRotation.ObjVelocity > 3)
+            {
+                Debug.Log(HeadRotation.ObjVelocity);
+                Animator.SetTrigger("Attack");
+                timeElapsed = 0;
+                Debug.Log("Left");
+            }
+
+            else if (HeadRotation.ObjVelocity > -3)
+            {
+                Animator.SetTrigger("AttackReverse");
+                timeElapsed = 0;
+                Debug.Log("Right");
+            }
+
+
         }
     }
 
