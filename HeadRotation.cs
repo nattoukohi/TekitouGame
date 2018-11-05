@@ -10,13 +10,20 @@ public class HeadRotation : MonoBehaviour {
 
     float PrevPos;
     float NewPos;
+
+    float PrevPos2;
+    float NewPos2;
     public float ObjVelocity;
+    public float ObjVelocity2;
+    Vector3 ObjVel;
     private float timeElapsed;
 
     // Use this for initialization
     void Start () {
         PrevPos = 0;
         NewPos = 0;
+        PrevPos2 = 0;
+        NewPos2 = 0;
     }
 	
 	// Update is called once per frame
@@ -43,11 +50,13 @@ public class HeadRotation : MonoBehaviour {
                          * (axis.y < 0 ? -1 : 1);
 
         NewPos = angle;  // each frame track the new position
-        ObjVelocity = NewPos - PrevPos;  // velocity = dist/time
+        ObjVelocity = NewPos - PrevPos;  // velocity = dist/time / Time.deltaTime
         PrevPos = NewPos;  // update position for next frame calculation
 
-        
+        NewPos2 = Sword.transform.position.y;
+        ObjVelocity2 = NewPos2 - PrevPos2;
+        PrevPos2 = NewPos2;
 
-       // Debug.Log("YO" + ObjVelocity);
+        //Debug.Log("YO" + ObjVelocity2);
     }
 }
